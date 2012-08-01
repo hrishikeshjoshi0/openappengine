@@ -1,0 +1,38 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+	'-//Hibernate/Hibernate Configuration DTD 3.0//EN'
+	'http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd'>
+
+<hibernate-configuration>
+
+	<session-factory>
+	<!--
+		<mapping package='com.books' />
+
+		<mapping class='com.books.Book' />
+
+		<mapping resource='someresource.hbm.xml'/>
+	-->
+		<mapping class='com.openappengine.model.party.Party' />
+		<mapping class='com.openappengine.model.party.Person' />
+		<mapping class='com.openappengine.model.party.PartyContactMech' />
+		<mapping class='com.openappengine.model.party.Address' />
+		
+		<mapping class='com.openappengine.model.product.Product' />
+		<mapping class='com.openappengine.model.product.ProdProductPrice'/>
+		
+		<mapping class='com.openappengine.model.fm.tax.FmTaxType'/>
+		<mapping class='com.openappengine.model.fm.tax.FmTaxRate'/>
+		
+		<mapping class='com.openappengine.model.contract.Contract' />
+		<mapping class='com.openappengine.model.contract.ContractLineItem'/>
+		
+		<mapping class='com.openappengine.model.fm.OhOrderHeader' />
+		<mapping class='com.openappengine.model.fm.OiOrderItem'/>
+		<mapping class='com.openappengine.model.fm.FmPayment'/>
+		
+		<mapping class='com.openappengine.model.ad.AdSequence'/>
+		
+	</session-factory>
+
+</hibernate-configuration>

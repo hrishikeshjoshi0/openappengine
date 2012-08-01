@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="SalesInvoice" language="groovy" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" >
+	<property name="ireport.zoom" value="1.2100000000000002"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Title" fontName="Times New Roman" fontSize="50" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="SubTitle" forecolor="#736343" fontName="Times New Roman" fontSize="18"/>
+	<style name="Column header" forecolor="#666666" fontName="Times New Roman" fontSize="12" isBold="true"/>
+	<style name="Detail" fontName="Times New Roman" fontSize="12"/>
+	<style name="Row" mode="Transparent">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+			<style backcolor="#E6DAC3"/>
+		</conditionalStyle>
+	</style>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<subDataset name="Table Dataset 1" />
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     prty.`pm_external_id`,
+     per.`pm_first_name`,
+     per.`pm_last_name`,
+     oh.`oh_external_id`,
+     oh.`oh_order_date`,
+     oh.`oh_from_date`,
+     oh.`oh_to_date`,
+     oh.`oh_grand_total`,
+     cn.`ch_contract_number`,
+     cn.`ch_ar_amount`,
+     ab.ab_address_1,
+     ab.ab_city
+FROM
+     `fm_order_header` oh,
+     `cn_contract_header` cn,
+     `pm_party` prty,
+     `pm_person` per,
+     `ab_address_book` ab
+WHERE
+     oh.oh_contract_number = cn.ch_contract_number
+ AND cn.ch_party_external_id = prty.pm_external_id
+ AND prty.pm_party_id = per.pm_party_id
+ AND ab.ab_attn_name = prty.pm_external_id]]>
+	</queryString>
+	<field name="pm_external_id" class="java.lang.String"/>
+	<field name="pm_first_name" class="java.lang.String"/>
+	<field name="pm_last_name" class="java.lang.String"/>
+	<field name="oh_external_id" class="java.lang.String"/>
+	<field name="oh_order_date" class="java.sql.Timestamp"/>
+	<field name="oh_from_date" class="java.sql.Timestamp"/>
+	<field name="oh_to_date" class="java.sql.Timestamp"/>
+	<field name="oh_grand_total" class="java.math.BigDecimal"/>
+	<field name="ch_contract_number" class="java.lang.String"/>
+	<field name="ch_ar_amount" class="java.math.BigDecimal"/>
+	<field name="ab_address_1" class="java.lang.String"/>
+	<field name="ab_city" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="138">
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="469" y="82" width="43" height="15"/>
+				<textElement>
+					<font fontName="Tahoma" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{oh_to_date}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement  x="412" y="82" width="41" height="15"/>
+				<textElement>
+					<font fontName="Tahoma" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{oh_from_date}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement  x="33" y="67" width="144" height="15"/>
+				<textElement>
+					<font fontName="Tahoma" size="9" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ab_address_1}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement  x="412" y="67" width="100" height="15"/>
+				<textElement>
+					<font fontName="Tahoma" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{oh_order_date}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="412" y="51" width="100" height="15"/>
+				<textElement>
+					<font fontName="Tahoma" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{oh_external_id}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="32" y="52" width="272" height="15"/>
+				<textElement>
+					<font fontName="Tahoma" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{pm_first_name} + " " + $F{pm_last_name}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="177" y="82" width="95" height="15"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="33" y="82" width="130" height="15"/>
+				<textElement>
+					<font fontName="Tahoma" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ab_city}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="316" splitType="Stretch">
+			<subreport>
+				<reportElement x="22" y="131" width="277" height="62"/>
+				<subreportParameter name="PARAMETER_ORDER_ID">
+					<subreportParameterExpression><![CDATA[$F{oh_external_id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "RE_SI_002.jasper"]]></subreportExpression>
+			</subreport>
+			<textField pattern="###0.00" isBlankWhenNull="true">
+				<reportElement x="9" y="19" width="79" height="15"/>
+				<textElement textAlignment="Center">
+					<font fontName="Tahoma" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ch_ar_amount}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="105" y="19" width="81" height="15"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="194" y="19" width="80" height="15"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00" isBlankWhenNull="true">
+				<reportElement x="385" y="19" width="80" height="15"/>
+				<textElement textAlignment="Center">
+					<font fontName="Tahoma" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{oh_grand_total}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="false">
+				<reportElement x="478" y="19" width="78" height="15"/>
+				<textElement textAlignment="Center">
+					<font fontName="Tahoma" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{oh_grand_total}?$F{oh_grand_total}:0.0) + ($F{ch_ar_amount}?$F{ch_ar_amount}:0.0)]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="29" y="104" width="172" height="15"/>
+				<textElement>
+					<font fontName="Tahoma" size="9"/>
+				</textElement>
+				<text><![CDATA[Active Subscriptions]]></text>
+			</staticText>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="113" splitType="Stretch">
+			<staticText>
+				<reportElement x="373" y="34" width="39" height="15"/>
+				<textElement>
+					<font fontName="Tahoma" size="9"/>
+				</textElement>
+				<text><![CDATA[Amount]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="441" y="34" width="78" height="15"/>
+				<textElement textAlignment="Center">
+					<font fontName="Tahoma" size="9" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{oh_grand_total}?$F{oh_grand_total}:0.0) + ($F{ch_ar_amount}?$F{ch_ar_amount}:0.0)]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="196" y="34" width="100" height="15"/>
+				<textElement>
+					<font fontName="Tahoma" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{oh_order_date}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="196" y="19" width="42" height="15"/>
+				<textElement textAlignment="Left">
+					<font fontName="Tahoma" size="9"/>
+				</textElement>
+				<text><![CDATA[Date]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="22" y="34" width="159" height="15"/>
+				<textElement>
+					<font fontName="Tahoma" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{oh_external_id}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="22" y="19" width="35" height="15"/>
+				<textElement>
+					<font fontName="Tahoma" size="9"/>
+				</textElement>
+				<text><![CDATA[Bill No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="373" y="19" width="68" height="15"/>
+				<textElement>
+					<font fontName="Tahoma" size="9"/>
+				</textElement>
+				<text><![CDATA[Customer#]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="441" y="19" width="100" height="15"/>
+				<textElement>
+					<font fontName="Tahoma" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{pm_external_id}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="370" y="0" width="166" height="15"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Tahoma" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{pm_first_name} + " " + $F{pm_last_name}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="22" y="0" width="100" height="19"/>
+				<textElement>
+					<font fontName="Times New Roman" isUnderline="true"/>
+				</textElement>
+			</textField>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>
