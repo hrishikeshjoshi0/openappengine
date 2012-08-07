@@ -30,6 +30,11 @@
 		<mapping class='com.openappengine.model.fm.OhOrderHeader' />
 		<mapping class='com.openappengine.model.fm.OiOrderItem'/>
 		<mapping class='com.openappengine.model.fm.FmPayment'/>
+		<mapping class='com.openappengine.model.fm.PartyBillingAccount'/>
+		
+		<mapping class='com.openappengine.model.billing.BillingCycle'/>
+		<mapping class='com.openappengine.model.batch.BulkPaymentUpload'/>
+		<mapping class='com.openappengine.model.batch.BulkPaymentUploadItem'/>
 		
 		<mapping class='com.openappengine.model.ad.AdSequence'/>
 		

@@ -15,11 +15,15 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.TableGenerator;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import com.openappengine.model.billing.BillingCycle;
 
 /**
  * @author hrishikesh.joshi
@@ -92,6 +96,10 @@ public class OhOrderHeader implements Serializable {
 	
 	@OneToMany(mappedBy="orderHeader",cascade=CascadeType.ALL)
 	private List<OiOrderItem> orderItems = new ArrayList<OiOrderItem>();
+	
+	@ManyToOne
+	@JoinColumn(name = "OH_BILLING_CYCLE_ID")
+	private BillingCycle billingCycle;
 
 	public int getOrderId() {
 		return orderId;
@@ -259,5 +267,13 @@ public class OhOrderHeader implements Serializable {
 			}
 		}
 		return totalTaxPrice;
+	}
+
+	public BillingCycle getBillingCycle() {
+		return billingCycle;
+	}
+
+	public void setBillingCycle(BillingCycle billingCycle) {
+		this.billingCycle = billingCycle;
 	}
 }

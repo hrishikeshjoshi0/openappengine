@@ -84,6 +84,9 @@ public class FmPayment implements Serializable {
 	
 	@Column(name="PT_TRANSACTION_ID")
 	private String transactionId;
+	
+	@Column(name="PT_BILLING_CYCLE")
+	private String billingCycleId;
 
 	public int getPaymentId() {
 		return paymentId;
@@ -195,5 +198,13 @@ public class FmPayment implements Serializable {
 
 	public void setTransactionId(String transactionId) {
 		this.transactionId = transactionId;
+	}
+
+	public String getBillingCycleId() {
+		return billingCycleId;
+	}
+
+	public void setBillingCycleId(String billingCycleId) {
+		this.billingCycleId = billingCycleId;
 	}
 }
