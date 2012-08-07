@@ -1,15 +1,17 @@
 package com.openappengine.model.batch
 
+
 import org.apache.commons.lang.StringUtils
 import org.springframework.dao.DataIntegrityViolationException
 
 import com.openappengine.model.billing.BillingCycle
-import com.openappengine.model.fm.FmPayment
 
 class BulkPaymentUploadController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
-
+	
+	def paymentService
+	
     def index() {
         redirect(action: "list", params: params)
     }
@@ -18,6 +20,22 @@ class BulkPaymentUploadController {
         params.max = Math.min(params.max ? params.int('max') : 10, 100)
         [bulkPaymentUploadInstanceList: BulkPaymentUpload.list(params), bulkPaymentUploadInstanceTotal: BulkPaymentUpload.count()]
     }
+	
+	def showBatchForm() {
+		def bulkPaymentUploadInstance = BulkPaymentUpload.get(params.id)
+		if (!bulkPaymentUploadInstance) {
+			flash.message = message(code: 'default.not.found.message', args: [message(code: 'bulkPaymentUpload.label', default: 'BulkPaymentUpload'), params.id])
+			redirect(action: "list")
+			return
+		}
+
+		def c = BillingCycle.createCriteria()
+		def results = c.list {
+			like("status", "INVOICED-WAITING_FOR_PAYMENTS")
+			order("toDate", "desc")
+		}
+		[billingCycles:results,bulkPaymentUploadInstance: bulkPaymentUploadInstance]
+	}
 	
 	def uploadBulkPayments() {
 		def bulkPaymentUploadInstance = BulkPaymentUpload.get(params.id)
@@ -31,18 +49,26 @@ class BulkPaymentUploadController {
 			bulkPaymentUploadInstance.uploadItems.eachWithIndex {item, i ->
 				//
 				if(!StringUtils.equals(item.status, 'PROCESSING_COMPLETE')) {
-					//Get the billing cycle
-					def bc = BillingCycle.findByName(item.billingCycleId)
 					
-					if(bc) {
-						def payment = FmPayment.findByBillingCycleIdAndBillingAccountId(bc.name,item.partyExternalId)
-						if(payment) {
-								
-						}
-					}
+					paymentService.applyPayment(item.billingCycleId,item.partyExternalId,item.amount)
+					
+					item.status = 'PROCESSING_COMPLETE'
+					item.save()
 				}
+				
 			}
+			
+			//Update status of Payment Batch
+			bulkPaymentUploadInstance.status = 'BATCH_PROCESSED'
+			
+			//TODO - Do this from a view. Allow user to mark a Billing Cycle as READY_FOR_PRINT
+			def billingCycleId = params.billingCycleId
+			def bc = BillingCycle.findByName(billingCycleId.toString())
+			bc.status = 'READY_FOR_PRINT'
+			bc.save()
 		}
+		
+		redirect(action: "list")
 	}
 
     def create() {

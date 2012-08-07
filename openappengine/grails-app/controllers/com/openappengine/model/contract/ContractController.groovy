@@ -1,11 +1,10 @@
 package com.openappengine.model.contract
 
-import org.apache.commons.lang.time.DateUtils;
 import org.springframework.dao.DataIntegrityViolationException
 
+import com.openappengine.model.billing.BillingCycle
 import com.openappengine.model.product.Product;
 import com.openappengine.services.contract.ContractCreationException;
-import com.sun.org.apache.bcel.internal.generic.NEW;
 
 class ContractController {
 	
@@ -53,25 +52,21 @@ class ContractController {
 	}
 	
 	def createOrder() {
-		Date now = new Date()
-
-		Calendar c = Calendar.instance
-		c.setTime(now)
-		c.set(Calendar.DAY_OF_MONTH, 1)
-		
-		params.fromDate = c.getTime()
-		
-		c.add(Calendar.MONTH, 1);
-		c.set(Calendar.DAY_OF_MONTH, 1)
-		c.add(Calendar.DATE, -1);
-		params.toDate = c.getTime()
-		
+		def c = BillingCycle.createCriteria()
+		def results = c.list {
+			like("status", "NEW")
+			order("toDate", "desc")
+		}
+		[billingCycles:results]
 	}
 	
 	def createAllOrders() {
-		def fromDate = Date.parse("MM/dd/yyyy", params.fromDate)
-		def toDate = Date.parse("MM/dd/yyyy", params.toDate)
-		orderService.createAllOrdersFromContracts(fromDate, toDate)
+		def bc = BillingCycle.findByName(params.billingCycleId)
+		def fromDate = bc.fromDate
+		def toDate = bc.toDate
+		
+		orderService.createAllOrdersForBillingCycle(bc)
+		bc.status = 'INVOICED-WAITING_FOR_PAYMENTS'
 		flash.message = message(code: 'default.created.success.message', args: [
 			message(code: 'contract.label', default: 'Order Generated')])
 		render(view: "orderSuccess")

@@ -12,27 +12,27 @@
 			<table>
 				<thead>
 					<tr>
-						<g:sortableColumn property="bulkPaymentUploadId" title="${message(code: 'bulkPaymentUpload.bulkPaymentUploadId.label', default: 'Bulk Payment Upload Id')}" />
+						<g:sortableColumn property="bulkPaymentUploadId" title="${message(code: 'bulkPaymentUpload.bulkPaymentUploadId.label', default: 'Upload Id')}" />
 					
 						<g:sortableColumn property="status" title="${message(code: 'bulkPaymentUpload.status.label', default: 'Status')}" />
 					
 						<g:sortableColumn property="uploadTimestamp" title="${message(code: 'bulkPaymentUpload.uploadTimestamp.label', default: 'Upload Timestamp')}" />
 						
-						<td/>
+						<th/>
 					</tr>
 				</thead>
 				<tbody>
 				<g:each in="${bulkPaymentUploadInstanceList}" status="i" var="bulkPaymentUploadInstance">
 					<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
 					
-						<td><g:link action="show" id="${bulkPaymentUploadInstancebulkPaymentUploadId}">${fieldValue(bean: bulkPaymentUploadInstance, field: "bulkPaymentUploadId")}</g:link></td>
+						<td><g:link action="show" id="${bulkPaymentUploadInstance.bulkPaymentUploadId}">${fieldValue(bean: bulkPaymentUploadInstance, field: "bulkPaymentUploadId")}</g:link></td>
 					
 						<td>${fieldValue(bean: bulkPaymentUploadInstance, field: "status")}</td>
 					
 						<td><g:formatDate date="${bulkPaymentUploadInstance.uploadTimestamp}" /></td>
 					
 						<td>
-							<g:link controller="bulkPaymentUpload" action="uploadBulkPayments" id="${bulkPaymentUploadInstancebulkPaymentUploadId}">
+							<g:link action="showBatchForm" id="${bulkPaymentUploadInstance.bulkPaymentUploadId}">
 								Start Batch
 							</g:link>
 						</td>

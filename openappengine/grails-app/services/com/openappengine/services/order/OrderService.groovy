@@ -1,17 +1,17 @@
 package com.openappengine.services.order
 
 
-import groovy.util.logging.Log
 
 import java.util.List;
 
-import org.apache.log4j.Logger;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.openappengine.model.billing.BillingCycle;
 import com.openappengine.model.contract.Contract
 import com.openappengine.model.contract.ContractLineItem;
 import com.openappengine.model.fm.OhOrderHeader
 import com.openappengine.model.fm.OiOrderItem
+import com.openappengine.model.fm.PartyBillingAccount
 import com.openappengine.model.fm.tax.FmTaxRate;
 import com.openappengine.model.fm.tax.FmTaxType;
 import com.openappengine.model.product.Product;
@@ -24,7 +24,7 @@ class OrderService {
 	def paymentService
 	
 	@Transactional
-	def createAllOrdersFromContracts(Date fromDate, Date toDate) {
+	def createAllOrdersForBillingCycle(BillingCycle bc) {
 		def c = Contract.createCriteria()
 		def results = c.list {
 			eq("active", Boolean.TRUE)
@@ -32,12 +32,12 @@ class OrderService {
 		
 		if(results != null && !results.isEmpty()) {
 			for (Contract contract : results) {
-				createOrderFromContract(contract.contractNumber, fromDate, toDate);
+				createOrderFromContract(contract.contractNumber, bc);
 			}
 		}
 	}
 
-    def createOrderFromContract(String contractNumber, Date fromDate, Date toDate) {
+    def createOrderFromContract(String contractNumber,BillingCycle bc) {
 		if(contractNumber == null) {
 			throw new IllegalArgumentException("Contract Number cannot be null.");
 		}
@@ -56,8 +56,8 @@ class OrderService {
 		
 		if(results != null && !results.isEmpty()) {
 			OhOrderHeader orderHeader = results.get(0)
-			if(DateUtils.isDateBetweenTwoDatesInclusive(orderHeader.fromDate, orderHeader.toDate, fromDate) 
-				|| DateUtils.isDateBetweenTwoDatesInclusive(orderHeader.fromDate, orderHeader.toDate, toDate)) {
+			if(DateUtils.isDateBetweenTwoDatesInclusive(orderHeader.fromDate, orderHeader.toDate, bc.fromDate) 
+				|| DateUtils.isDateBetweenTwoDatesInclusive(orderHeader.fromDate, orderHeader.toDate, bc.toDate)) {
 				log.info "Order already exists."
 				return
 			}
@@ -65,14 +65,14 @@ class OrderService {
 		
 		OhOrderHeader order = new OhOrderHeader()
 		order.billingAccountId =  contractInstance.partyId
-		order.fromDate =  fromDate
-		order.toDate =  toDate
+		order.fromDate =  bc.fromDate
+		order.toDate =  bc.toDate
 		order.contractNumber = contractNumber
 		order.entryDate = new Date()
 		order.orderDate = new Date()
 		order.externalId = ""
 		order.orderType = "SO"
-		order.status = "INVOICED"
+		order.status = "INVOICED_PENDING_PAYMENT"
 		order.partyNumber = contractInstance.partyId
 		
 		String orderNumber = sequenceGeneratorService.getNextSequenceNumber("Order")
@@ -93,8 +93,8 @@ class OrderService {
 					item.quantity = lineItem.quantity
 					item.priceModified = false
 					
-					item.unitPrice = lineItem.product.getProductPrice(fromDate)
-					item.taxPrice = calculateTaxAmount(lineItem.product,fromDate)
+					item.unitPrice = lineItem.product.getProductPrice(bc.fromDate)
+					item.taxPrice = calculateTaxAmount(lineItem.product,bc.fromDate)
 					item.lineTotalPrice = item.unitPrice + item.taxPrice
 					
 					grandTotal += item.lineTotalPrice
@@ -109,8 +109,18 @@ class OrderService {
 		order.grandTotal = grandTotal
 		
 		//Contract AR Amount
-		contractInstance.arAmount = contractInstance.arAmount + order.grandTotal; 
+		contractInstance.arAmount = contractInstance.arAmount + order.grandTotal;
+		
+		//BC
+		order.billingCycle = bc
 		order.save(flush:true)
+		
+		def partyBillingAcct = new PartyBillingAccount()
+		partyBillingAcct.aspectDate = bc.fromDate
+		partyBillingAcct.balanceAmount = order.grandTotal
+		partyBillingAcct.billingCycleNumber = bc.name
+		partyBillingAcct.partyExternalId = order.billingAccountId
+		partyBillingAcct.save()
 		
 		//Create a Payment Pending for this Order.
 		paymentService.createPendingPaymentForOrder(contractInstance.contractNumber, orderNumber, contractInstance.partyId, grandTotal)

@@ -27,26 +27,21 @@
 			</h1>
 			
 			<g:form name="contractForm" action="createAllOrders" >
-				<fieldset class="form">
-					<div class="fieldcontain ${hasErrors(bean: ohOrderHeaderInstance, field: 'fromDate', 'error')} ">
-						<label for="toDate">
-							<g:message code="ohOrderHeader.toDate.label" default="From Date" />
-						</label>
-						<g:jqDatePicker name="fromDate" value="${params?.fromDate}" />
-					</div>
-					
-					<div class="fieldcontain ${hasErrors(bean: ohOrderHeaderInstance, field: 'toDate', 'error')} ">
-						<label for="toDate">
-							<g:message code="ohOrderHeader.toDate.label" default="To Date" />
-						</label>
-						<g:jqDatePicker name="toDate" value="${params?.toDate}" />
-					</div>					
-				</fieldset>
-				
-				<fieldset class="buttons">
-					<g:submitButton name="createOrder" 
-							class="save" value="${message(code: 'default.button.createOrder.label', default: 'Create Order')}" />
-				</fieldset>
+					<table style="width: 50%;">
+						<tr>
+							<td><label>Select Billing Cycle </label></td>
+							<td><g:hiddenField name="id"
+									value="${bulkPaymentUploadInstance?.bulkPaymentUploadId}" /> <g:select
+									name="billingCycleId" from="${billingCycles}" optionValue="name"
+									optionKey="name" /></td>
+						</tr>
+						<tr>
+							<td colspan="2">
+								<g:submitButton name="createOrder" 
+									class="save" value="${message(code: 'default.button.createOrder.label', default: 'Create Order')}" />
+							</td>		
+						</tr>
+					</table>
 			</g:form>
 		</div>
 	</body>
