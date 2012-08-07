@@ -4,7 +4,7 @@ import org.apache.commons.lang.StringUtils
 import org.springframework.dao.DataIntegrityViolationException
 
 import com.openappengine.model.billing.BillingCycle
-import com.openappengine.model.fm.OhOrderHeader
+import com.openappengine.model.fm.FmPayment
 
 class BulkPaymentUploadController {
 
@@ -35,8 +35,8 @@ class BulkPaymentUploadController {
 					def bc = BillingCycle.findByName(item.billingCycleId)
 					
 					if(bc) {
-						def order = OhOrderHeader.findByBillingCycleAndBillingAccountId(bc,item.partyExternalId)
-						if(order) {
+						def payment = FmPayment.findByBillingCycleIdAndBillingAccountId(bc.name,item.partyExternalId)
+						if(payment) {
 								
 						}
 					}
