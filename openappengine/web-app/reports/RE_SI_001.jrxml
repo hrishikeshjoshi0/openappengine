@@ -50,7 +50,8 @@
      cn.`ch_contract_number`,
      cn.`ch_ar_amount`,
      ab.ab_address_1,
-     ab.ab_city
+     ab.ab_city,
+     bl.bc_name
 FROM
      fm_order_header oh,
      cn_contract_header cn,
@@ -64,7 +65,7 @@ WHERE
  AND prty.pm_party_id = per.pm_party_id
  AND ab.ab_attn_name = prty.pm_external_id
  AND bl.bc_billing_cycle_id = oh.oh_billing_cycle_id
- AND bl.bc_name='201206']]>
+ AND bl.bc_name='201207']]>
 	</queryString>
 	<field name="pm_external_id" class="java.lang.String"/>
 	<field name="pm_first_name" class="java.lang.String"/>
@@ -78,6 +79,7 @@ WHERE
 	<field name="ch_ar_amount" class="java.math.BigDecimal"/>
 	<field name="ab_address_1" class="java.lang.String"/>
 	<field name="ab_city" class="java.lang.String"/>
+	<field name="bc_name" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -155,6 +157,28 @@ WHERE
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "RE_SI_002.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement x="10" y="20" width="50" height="12"/>
+				<subreportParameter name="PARAMETER_BILLING_CYCLE_ID">
+					<subreportParameterExpression><![CDATA[$F{bc_name}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PARAMETER_PARTY_EXTERNAL_ID">
+					<subreportParameterExpression><![CDATA[$F{pm_external_id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "RE_SI_003.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement x="110" y="20" width="50" height="12"/>
+				<subreportParameter name="PARAMETER_BILLING_CYCLE_ID">
+					<subreportParameterExpression><![CDATA[$F{bc_name}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PARAMETER_PARTY_EXTERNAL_ID">
+					<subreportParameterExpression><![CDATA[$F{pm_external_id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "RE_SI_004.jasper"]]></subreportExpression>
 			</subreport>
 			<textField pattern="###0.00" isBlankWhenNull="true">
 				<reportElement x="9" y="19" width="79" height="15"/>

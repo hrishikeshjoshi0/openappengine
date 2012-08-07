@@ -11,11 +11,9 @@
 	<parameter name="PARAMETER_BILLING_CYCLE_ID" class="java.lang.String"/>
 	<parameter name="PARAMETER_PARTY_EXTERNAL_ID" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[SELECT pb_balance_amount as prev_balance
-                    FROM fm_party_billing_account  where pb_billing_cycle_id = $P{PARAMETER_BILLING_CYCLE_ID}
-                    AND pb_party_external_id = $P{PARAMETER_PARTY_EXTERNAL_ID}]]>
+		<![CDATA[SELECT SUM(pt_amount) as last_payment FROM fm_payment where pt_billing_account_id = $P{PARAMETER_PARTY_EXTERNAL_ID} AND pt_billing_cycle = $P{PARAMETER_BILLING_CYCLE_ID}]]>
 	</queryString>
-	<field name="prev_balance" class="java.math.BigDecimal"/>
+	<field name="last_payment" class="java.math.BigDecimal"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -35,7 +33,7 @@
 				<textElement>
 					<font fontName="Tahoma"/>
 				</textElement>
-				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{prev_balance}?$F{prev_balance}:0.0]]></textFieldExpression>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{last_payment}?$F{last_payment}:0.0]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
