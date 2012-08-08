@@ -19,7 +19,7 @@ class PaymentService {
 			//Update payment status
 			def payment = FmPayment.findByBillingCycleIdAndBillingAccountId(billingCycleId,partyExternalId)
 			if(payment) {
-				if(amount >= order.amount) {
+				if(amount >= order.grandTotal) {
 					payment.status = 'PAYMENT_COMPLETE'
 				} else {
 					payment.status = 'PAYMENT_PARTIAL'

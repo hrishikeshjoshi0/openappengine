@@ -64,7 +64,7 @@ class BulkPaymentUploadController {
 			//TODO - Do this from a view. Allow user to mark a Billing Cycle as READY_FOR_PRINT
 			def billingCycleId = params.billingCycleId
 			def bc = BillingCycle.findByName(billingCycleId.toString())
-			bc.status = 'READY_FOR_PRINT'
+			bc.status = 'PAYMENT_COMPLETE'
 			bc.save()
 		}
 		
