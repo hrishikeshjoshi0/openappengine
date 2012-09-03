@@ -74,6 +74,7 @@ class OrderService {
 		order.orderType = "SO"
 		order.status = "INVOICED_PENDING_PAYMENT"
 		order.partyNumber = contractInstance.partyId
+		order.prevBalance = contractInstance.arAmount
 		
 		String orderNumber = sequenceGeneratorService.getNextSequenceNumber("Order")
 		order.externalId = orderNumber
