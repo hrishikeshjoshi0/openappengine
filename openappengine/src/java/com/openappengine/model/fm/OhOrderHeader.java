@@ -86,6 +86,9 @@ public class OhOrderHeader implements Serializable {
 	@Column(name="OH_GRAND_TOTAL")
 	private BigDecimal grandTotal = new BigDecimal("0.0");
 	
+	@Column(name="OH_PREV_BALANCE")
+	private BigDecimal prevBalance = new BigDecimal("0.0");
+	
 	@Column(name="OH_FROM_DATE")
 	@Temporal(TemporalType.DATE)
 	private Date fromDate;
