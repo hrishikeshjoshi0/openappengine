@@ -81,10 +81,10 @@ class OrderService {
 		
 		def date = new Date()
 		def grandTotal = new BigDecimal(0.0)
+		int i = 0
 		
 		List<ContractLineItem> lineItems = contractInstance.lineItems
 		if(lineItems != null && !lineItems.isEmpty()) {
-			int i = 0
 			for (ContractLineItem lineItem : lineItems) {
 				if(lineItem.active) {
 					OiOrderItem item = new OiOrderItem()
@@ -107,10 +107,31 @@ class OrderService {
 		}
 		
 		
-		order.grandTotal = grandTotal
+		// Add STB Rent Product if flag isOnRent = 1
+		/*if(contractInstance.isOnRent==true){
+			OiOrderItem rentItem = new OiOrderItem()
+			rentItem.orderHeader = order
+			rentItem.orderItemSequenceId = i
+			Product rentProduct = Product.get(3)
+			rentItem.product = rentProduct
+			rentItem.quantity = 1
+			rentItem.priceModified = false
+			
+			rentItem.unitPrice = rentProduct.getProductPrice(bc.fromDate)*4
+			rentItem.taxPrice = 0
+			rentItem.lineTotalPrice = rentItem.unitPrice + rentItem.taxPrice
+			
+			grandTotal += rentItem.lineTotalPrice
+			order.addOrderItem(rentItem)
+			}
+		*/
 		
 		//Contract AR Amount
-		contractInstance.arAmount = contractInstance.arAmount + order.grandTotal;
+		contractInstance.arAmount = contractInstance.arAmount + grandTotal
+		
+		order.grandTotal = grandTotal+order.prevBalance
+		
+		
 		
 		//BC
 		order.billingCycle = bc

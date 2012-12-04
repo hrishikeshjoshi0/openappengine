@@ -60,7 +60,43 @@ public class Contract {
 	private String orderRecurrence;
 	
 	@Column(name="CH_AR_AMOUNT")
-	private BigDecimal arAmount = new BigDecimal(0.0); 
+	private BigDecimal arAmount = new BigDecimal(0.0);
+	
+	@Column(name="CH_STB_NO",nullable=true)
+	private String stbNo;
+	
+	@Column(name="CH_VC_NO",nullable=true)
+	private String vcNo;
+	
+	public String getVcNo() {
+		return vcNo;
+	}
+
+	public void setVcNo(String vcNo) {
+		this.vcNo = vcNo;
+	}
+
+	public String getRfNo() {
+		return rfNo;
+	}
+
+	public void setRfNo(String rfNo) {
+		this.rfNo = rfNo;
+	}
+
+	public Boolean getIsOnRent() {
+		return isOnRent;
+	}
+
+	public void setIsOnRent(Boolean isOnRent) {
+		this.isOnRent = isOnRent;
+	}
+
+	@Column(name="CH_RF_NO",nullable=true)
+	private String rfNo;
+	
+	@Column(name="CH_IS_ON_RENT")
+	private Boolean isOnRent = Boolean.FALSE;
 
 	public int getContractId() {
 		return contractId;
@@ -147,6 +183,14 @@ public class Contract {
 
 	public void setArAmount(BigDecimal arAmount) {
 		this.arAmount = arAmount;
+	}
+
+	public String getStbNo() {
+		return stbNo;
+	}
+
+	public void setStbNo(String stbNo) {
+		this.stbNo = stbNo;
 	}
 	
 }

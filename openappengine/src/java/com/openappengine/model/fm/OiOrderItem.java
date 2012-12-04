@@ -83,7 +83,7 @@ public class OiOrderItem implements Serializable {
 	private BigDecimal lineTotalPrice;
 	
 	@ManyToOne
-	@JoinColumn(name = "OI_ORDER_ID", unique = true, nullable = false)
+	@JoinColumn(name = "OI_ORDER_ID", unique = true, nullable = true)
 	private OhOrderHeader orderHeader;
 
 	public String getOrderItemSequenceId() {

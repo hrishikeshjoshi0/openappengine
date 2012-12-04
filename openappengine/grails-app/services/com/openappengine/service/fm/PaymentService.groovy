@@ -74,6 +74,7 @@ class PaymentService {
 		payment.partyExternalIdFrom = partyExternalId
 		payment.status = FmPayment.PENDING
 		payment.paymentNumber = sequenceGeneratorService.getNextSequenceNumber("Payment")
+		//payment.billingCycleId = billingCycleId
 		
 		payment.save()
     }

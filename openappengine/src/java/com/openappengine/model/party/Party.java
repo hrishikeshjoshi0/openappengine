@@ -64,6 +64,9 @@ public class Party implements Serializable {
 
 	@Column(name = "PM_STATUS", nullable = false, length = 50)
 	private String status;
+	
+	@Column(name = "PM_ACCOUNT_REF_NO", length = 50)
+	private String accountRefNo;
 
 	@OneToMany(cascade = {CascadeType.ALL})
 	@JoinColumn(name = "PM_PARTY_ID", nullable = false)
