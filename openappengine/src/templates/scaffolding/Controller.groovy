@@ -1,5 +1,9 @@
 <%=packageName ? "package ${packageName}\n\n" : ''%>import org.springframework.dao.DataIntegrityViolationException
 
+/**
+ * ${className}Controller
+ * A controller class handles incoming web requests and performs actions such as redirects, rendering views and so on.
+ */
 class ${className}Controller {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]

@@ -3,6 +3,10 @@
 import org.junit.*
 import grails.test.mixin.*
 
+/**
+ * ${className}ControllerTests
+ * A unit test class is used to test individual methods or blocks of code without considering the surrounding infrastructure
+ */
 @TestFor(${className}Controller)
 @Mock(${className})
 class ${className}ControllerTests {

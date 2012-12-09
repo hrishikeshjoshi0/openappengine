@@ -1,160 +1,213 @@
 
-<%@ page import="com.openappengine.model.product.Product"%>
+<%@ page import="com.openappengine.model.product.Product" %>
 <!doctype html>
 <html>
+
 <head>
-<meta name="layout" content="main">
-<g:set var="entityName"
-	value="${message(code: 'product.label', default: 'Product')}" />
-<title>
-	Product | Product ${productInstance?.pdProductName }
-</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="layout" content="kickstart" />
+	<g:set var="entityName" value="${message(code: 'product.label', default: 'Product')}" />
+	<title><g:message code="default.show.label" args="[entityName]" /></title>
 </head>
+
 <body>
-	<div id="show-product" class="content scaffold-show" role="main">
-		<ol class="property-list product">
-			<g:if test="${productInstance?.pdProductName}">
-				<li class="fieldcontain"><span id="pdProductName-label"
-					class="property-label"><g:message
-							code="product.pdProductName.label" default="Product Name" /></span>
-					<span class="property-value" aria-labelledby="pdProductName-label"><g:fieldValue
-							bean="${productInstance}" field="pdProductName" /></span></li>
-			</g:if>
 
-			<g:if test="${productInstance?.pdInternalName}">
-				<li class="fieldcontain"><span id="pdInternalName-label"
-					class="property-label"><g:message
-							code="product.pdInternalName.label" default="Internal Name" /></span>
-					<span class="property-value" aria-labelledby="pdInternalName-label"><g:fieldValue
-							bean="${productInstance}" field="pdInternalName" /></span></li>
-			</g:if>
-			
-			<g:if test="${productInstance?.pdProductType}">
-				<li class="fieldcontain"><span id="pdProductType-label"
-					class="property-label"><g:message
-							code="product.pdProductType.label" default="Product Type" /></span>
-					<span class="property-value" aria-labelledby="pdProductType-label"><g:fieldValue
-							bean="${productInstance}" field="pdProductType" /></span></li>
-			</g:if>
-			
-			<g:if test="${productInstance?.pdTaxable}">
-				<li class="fieldcontain"><span id="pdTaxable-label"
-					class="property-label"><g:message
-							code="product.pdTaxable.label" default="Taxable" /></span> <span
-					class="property-value" aria-labelledby="pdTaxable-label"><g:formatBoolean
-							boolean="${productInstance?.pdTaxable}" /></span></li>
-			</g:if>
-			
-			<g:if test="${productInstance?.pdFixedAmount}">
-				<li class="fieldcontain"><span id="pdFixedAmount-label"
-					class="property-label"><g:message
-							code="product.pdFixedAmount.label" default="Fixed Amount" /></span>
-					<span class="property-value" aria-labelledby="pdFixedAmount-label"><g:fieldValue
-							bean="${productInstance}" field="pdFixedAmount" /></span></li>
-			</g:if>
-			
-			<g:if test="${productInstance?.pdDescription}">
-				<li class="fieldcontain"><span id="pdDescription-label"
-					class="property-label"><g:message
-							code="product.pdDescription.label" default="Description" /></span> <span
-					class="property-value" aria-labelledby="pdDescription-label"><g:fieldValue
-							bean="${productInstance}" field="pdDescription" /></span></li>
-			</g:if>
-			
-			<g:if test="${productInstance?.pdIsVirtual}">
-				<li class="fieldcontain"><span id="pdIsVirtual-label"
-					class="property-label"><g:message
-							code="product.pdIsVirtual.label" default="Is Virtual" /></span> <span
-					class="property-value" aria-labelledby="pdIsVirtual-label"><g:formatBoolean
-							boolean="${productInstance?.pdIsVirtual}" /></span></li>
-			</g:if>
+<section id="show-product" class="first">
 
-			<li class="fieldcontain"><span id="pdCreatedDate-label"
-				class="property-label"><g:message
-						code="product.pdCreatedDate.label" default="Created Date" /></span> <span
-				class="property-value" aria-labelledby="pdCreatedDate-label"><g:formatDate format="yyyy-MM-dd"
-						date="${productInstance?.pdCreatedDate}" /></span></li>
-			
-			<g:if test="${productInstance?.pdIntroductionDate}">
-				<li class="fieldcontain"><span id="pdIntroductionDate-label"
-					class="property-label"><g:message
-							code="product.pdIntroductionDate.label"
-							default="Introduction Date" /></span> <span class="property-value"
-					aria-labelledby="pdIntroductionDate-label">
-					<g:formatDate format="yyyy-MM-dd"
-							date="${productInstance?.pdIntroductionDate}" /></span></li>
-			</g:if>			
+	<table class="table">
+		<tbody>
+		
+			<tr class="prop">
+				<td valign="top" class="name"><g:message code="product.pdProductId.label" default="Pd Product Id" /></td>
+				
+				<td valign="top" class="value">${fieldValue(bean: productInstance, field: "pdProductId")}</td>
+				
+			</tr>
+		
+			<tr class="prop">
+				<td valign="top" class="name"><g:message code="product.pdAmountUomType.label" default="Pd Amount Uom Type" /></td>
+				
+				<td valign="top" class="value">${fieldValue(bean: productInstance, field: "pdAmountUomType")}</td>
+				
+			</tr>
+		
+			<tr class="prop">
+				<td valign="top" class="name"><g:message code="product.pdComments.label" default="Pd Comments" /></td>
+				
+				<td valign="top" class="value">${fieldValue(bean: productInstance, field: "pdComments")}</td>
+				
+			</tr>
+		
+			<tr class="prop">
+				<td valign="top" class="name"><g:message code="product.pdCreatedDate.label" default="Pd Created Date" /></td>
+				
+				<td valign="top" class="value"><g:formatDate date="${productInstance?.pdCreatedDate}" /></td>
+				
+			</tr>
+		
+			<tr class="prop">
+				<td valign="top" class="name"><g:message code="product.pdDescription.label" default="Pd Description" /></td>
+				
+				<td valign="top" class="value">${fieldValue(bean: productInstance, field: "pdDescription")}</td>
+				
+			</tr>
+		
+			<tr class="prop">
+				<td valign="top" class="name"><g:message code="product.pdFixedAmount.label" default="Pd Fixed Amount" /></td>
+				
+				<td valign="top" class="value">${fieldValue(bean: productInstance, field: "pdFixedAmount")}</td>
+				
+			</tr>
+		
+			<tr class="prop">
+				<td valign="top" class="name"><g:message code="product.pdInternalName.label" default="Pd Internal Name" /></td>
+				
+				<td valign="top" class="value">${fieldValue(bean: productInstance, field: "pdInternalName")}</td>
+				
+			</tr>
+		
+			<tr class="prop">
+				<td valign="top" class="name"><g:message code="product.pdIntroductionDate.label" default="Pd Introduction Date" /></td>
+				
+				<td valign="top" class="value"><g:formatDate date="${productInstance?.pdIntroductionDate}" /></td>
+				
+			</tr>
+		
+			<tr class="prop">
+				<td valign="top" class="name"><g:message code="product.pdIsVirtual.label" default="Pd Is Virtual" /></td>
+				
+				<td valign="top" class="value"><g:formatBoolean boolean="${productInstance?.pdIsVirtual}" /></td>
+				
+			</tr>
+		
+			<tr class="prop">
+				<td valign="top" class="name"><g:message code="product.pdPiecesIncluded.label" default="Pd Pieces Included" /></td>
+				
+				<td valign="top" class="value">${fieldValue(bean: productInstance, field: "pdPiecesIncluded")}</td>
+				
+			</tr>
+		
+			<tr class="prop">
+				<td valign="top" class="name"><g:message code="product.pdProductName.label" default="Pd Product Name" /></td>
+				
+				<td valign="top" class="value">${fieldValue(bean: productInstance, field: "pdProductName")}</td>
+				
+			</tr>
+		
+			<tr class="prop">
+				<td valign="top" class="name"><g:message code="product.pdProductType.label" default="Pd Product Type" /></td>
+				
+				<td valign="top" class="value">${fieldValue(bean: productInstance, field: "pdProductType")}</td>
+				
+			</tr>
+		
+			<tr class="prop">
+				<td valign="top" class="name"><g:message code="product.pdQuantityIncluded.label" default="Pd Quantity Included" /></td>
+				
+				<td valign="top" class="value">${fieldValue(bean: productInstance, field: "pdQuantityIncluded")}</td>
+				
+			</tr>
+		
+			<tr class="prop">
+				<td valign="top" class="name"><g:message code="product.pdQuantityUom.label" default="Pd Quantity Uom" /></td>
+				
+				<td valign="top" class="value">${fieldValue(bean: productInstance, field: "pdQuantityUom")}</td>
+				
+			</tr>
+		
+			<tr class="prop">
+				<td valign="top" class="name"><g:message code="product.pdRequireAmount.label" default="Pd Require Amount" /></td>
+				
+				<td valign="top" class="value"><g:formatBoolean boolean="${productInstance?.pdRequireAmount}" /></td>
+				
+			</tr>
+		
+			<tr class="prop">
+				<td valign="top" class="name"><g:message code="product.pdRequireInventory.label" default="Pd Require Inventory" /></td>
+				
+				<td valign="top" class="value"><g:formatBoolean boolean="${productInstance?.pdRequireInventory}" /></td>
+				
+			</tr>
+		
+			<tr class="prop">
+				<td valign="top" class="name"><g:message code="product.pdReturnable.label" default="Pd Returnable" /></td>
+				
+				<td valign="top" class="value"><g:formatBoolean boolean="${productInstance?.pdReturnable}" /></td>
+				
+			</tr>
+		
+			<tr class="prop">
+				<td valign="top" class="name"><g:message code="product.pdSalesDiscWhenNotAvail.label" default="Pd Sales Disc When Not Avail" /></td>
+				
+				<td valign="top" class="value"><g:formatBoolean boolean="${productInstance?.pdSalesDiscWhenNotAvail}" /></td>
+				
+			</tr>
+		
+			<tr class="prop">
+				<td valign="top" class="name"><g:message code="product.pdSalesDiscontinuationDate.label" default="Pd Sales Discontinuation Date" /></td>
+				
+				<td valign="top" class="value"><g:formatDate date="${productInstance?.pdSalesDiscontinuationDate}" /></td>
+				
+			</tr>
+		
+			<tr class="prop">
+				<td valign="top" class="name"><g:message code="product.pdSupportDiscontinuationDate.label" default="Pd Support Discontinuation Date" /></td>
+				
+				<td valign="top" class="value"><g:formatDate date="${productInstance?.pdSupportDiscontinuationDate}" /></td>
+				
+			</tr>
+		
+			<tr class="prop">
+				<td valign="top" class="name"><g:message code="product.pdTaxable.label" default="Pd Taxable" /></td>
+				
+				<td valign="top" class="value"><g:formatBoolean boolean="${productInstance?.pdTaxable}" /></td>
+				
+			</tr>
+		
+			<tr class="prop">
+				<td valign="top" class="name"><g:message code="product.pdWeight.label" default="Pd Weight" /></td>
+				
+				<td valign="top" class="value">${fieldValue(bean: productInstance, field: "pdWeight")}</td>
+				
+			</tr>
+		
+			<tr class="prop">
+				<td valign="top" class="name"><g:message code="product.pdWeightUomId.label" default="Pd Weight Uom Id" /></td>
+				
+				<td valign="top" class="value">${fieldValue(bean: productInstance, field: "pdWeightUomId")}</td>
+				
+			</tr>
+		
+			<tr class="prop">
+				<td valign="top" class="name"><g:message code="product.prodProductPrices.label" default="Prod Product Prices" /></td>
+				
+				<td valign="top" style="text-align: left;" class="value">
+					<ul>
+					<g:each in="${productInstance.prodProductPrices}" var="p">
+						<li><g:link controller="prodProductPrice" action="show" id="${p.id}">${p?.encodeAsHTML()}</g:link></li>
+					</g:each>
+					</ul>
+				</td>
+				
+			</tr>
+		
+			<tr class="prop">
+				<td valign="top" class="name"><g:message code="product.productTaxes.label" default="Product Taxes" /></td>
+				
+				<td valign="top" style="text-align: left;" class="value">
+					<ul>
+					<g:each in="${productInstance.productTaxes}" var="p">
+						<li><g:link controller="fmTaxType" action="show" id="${p.id}">${p?.encodeAsHTML()}</g:link></li>
+					</g:each>
+					</ul>
+				</td>
+				
+			</tr>
+		
+		</tbody>
+	</table>
+</section>
 
-			<li class="fieldcontain"><span
-				id="pdSalesDiscontinuationDate-label" class="property-label"><g:message
-						code="product.pdSalesDiscontinuationDate.label"
-						default="Sales Discontinuation Date" /></span> <span
-				class="property-value"
-				aria-labelledby="pdSalesDiscontinuationDate-label"><g:formatDate format="yyyy-MM-dd"
-						date="${productInstance?.pdSalesDiscontinuationDate}" /></span></li>
-
-			<li class="fieldcontain"><span
-					id="pdSupportDiscontinuationDate-label" class="property-label"><g:message
-							code="product.pdSupportDiscontinuationDate.label"
-							default="Support Discontinuation Date" /></span> <span
-					class="property-value"
-					aria-labelledby="pdSupportDiscontinuationDate-label"><g:formatDate format="yyyy-MM-dd"
-							date="${productInstance?.pdSupportDiscontinuationDate}" /></span></li>
-
-			<g:if test="${productInstance?.prodProductPrices}">
-				<li class="fieldcontain">
-					<span id="prodProductPrices-label" class="property-label">
-						<g:message code="product.prodProductPrices.label"
-									default="Price" />
-					</span> 
-					
-					<table>
-						<thead>
-							<tr>
-								<th>From Date</th>
-								<th>To Date</th>
-								<th>Price</th>
-								<th></th>
-							</tr>
-						</thead>
-						<tbody>
-							<g:each in="${productInstance.prodProductPrices}" var="p">
-								<tr>
-									<td>
-										<g:formatDate format="yyyy-MM-dd" date="${p.ppFromDate}"/>
-									</td>
-									<td>
-										<g:formatDate format="yyyy-MM-dd" date="${p.ppToDate}"/>
-									</td>
-									<td>
-										<g:formatNumber number="${p.ppPrice}" type="number" maxFractionDigits="2" />
-									</td>
-									<td>
-										<g:link controller="productPrice" action="edit" id="${p.ppProdProductPriceId}">
-											Edit
-										</g:link>
-									</td>
-								</tr>
-							</g:each>
-						</tbody>
-					</table>
-				</li>
-			</g:if>
-		</ol>
-		<g:form>
-			<fieldset class="buttons">
-				<g:hiddenField name="id" value="${productInstance?.pdProductId}" />
-				<g:link class="edit" action="edit" id="${productInstance?.pdProductId}">
-					<g:message code="default.button.edit.label" default="Edit" />
-				</g:link>
-				<g:link class="edit" action="addPrice" id="${productInstance?.pdProductId}">
-					<g:message code="default.button.price.label" default="Add Price" />
-				</g:link>
-				<g:actionSubmit class="delete" action="delete"
-					value="${message(code: 'default.button.delete.label', default: 'Delete')}"
-					onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />
-			</fieldset>
-		</g:form>
-	</div>
 </body>
+
 </html>

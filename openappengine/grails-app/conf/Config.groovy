@@ -107,3 +107,4 @@ grails.plugins.springsecurity.interceptUrlMap = [
 	'/post/followAjax':  ['ROLE_USER'],
 	'/post/addPostAjax': ['ROLE_USER', 'IS_AUTHENTICATED_FULLY']
 ]
+grails.config.defaults.locations = [KickstartResources]

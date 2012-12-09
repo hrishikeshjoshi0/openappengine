@@ -5,6 +5,10 @@ package com.openappengine.model.product
 import org.junit.*
 import grails.test.mixin.*
 
+/**
+ * ProductControllerTests
+ * A unit test class is used to test individual methods or blocks of code without considering the surrounding infrastructure
+ */
 @TestFor(ProductController)
 @Mock(Product)
 class ProductControllerTests {
