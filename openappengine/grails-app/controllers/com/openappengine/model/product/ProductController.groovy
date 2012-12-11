@@ -30,8 +30,8 @@ class ProductController {
             return
         }
 
-		flash.message = message(code: 'default.created.message', args: [message(code: 'product.label', default: 'Product'), productInstance.id])
-        redirect(action: "show", id: productInstance.id)
+		flash.message = message(code: 'default.created.message', args: [message(code: 'product.label', default: 'Product'), productInstance.pdProductId])
+        redirect(action: "show", id: productInstance.pdProductId)
     }
 
     def show() {
@@ -82,8 +82,8 @@ class ProductController {
             return
         }
 
-		flash.message = message(code: 'default.updated.message', args: [message(code: 'product.label', default: 'Product'), productInstance.id])
-        redirect(action: "show", id: productInstance.id)
+		flash.message = message(code: 'default.updated.message', args: [message(code: 'product.label', default: 'Product'), productInstance.pdProductId])
+        redirect(action: "show", id: productInstance.pdProductId)
     }
 
     def delete() {

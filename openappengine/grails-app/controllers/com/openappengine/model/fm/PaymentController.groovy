@@ -1,6 +1,10 @@
 package com.openappengine.model.fm
 
 import org.springframework.dao.DataIntegrityViolationException
+import com.openappengine.model.batch.BulkPaymentUpload
+import com.openappengine.model.batch.BulkPaymentUploadItem
+import grails.converters.JSON
+import org.codehaus.groovy.grails.web.json.*
 
 class PaymentController {
 
@@ -116,4 +120,40 @@ class PaymentController {
             redirect(action: "show", id: params.id)
         }
     }
+	
+	def paymentUpload(){
+		
+	}
+	
+	def uploadRecords(){
+		def a = 1000
+		def bulkPaymentUploadInstance = new BulkPaymentUpload(params)
+		bulkPaymentUploadInstance.bulkPaymentUploadId =  4
+		bulkPaymentUploadInstance.status = 'NEW'
+		bulkPaymentUploadInstance.uploadTimestamp = new Date()
+		//bulkPaymentUploadInstance.uploadItems = BulkPaymentUploadItem.get(1)
+		bulkPaymentUploadInstance.save(flush:true)
+		
+		List<JSON> payments = JSON.parse(params.data)
+		payments.each {
+		a = a+1
+		def paymentItem = new BulkPaymentUploadItem()
+		
+		paymentItem.bulkPaymentUploadItemId = a
+		if(it[0]=='null')
+		{
+			it[0]=0
+		}
+		paymentItem.partyExternalId = it[0]
+		paymentItem.amount = it[1]
+		paymentItem.bulkPaymentUpload = payment
+		paymentItem.uploadTimestamp = new Date()
+		paymentItem.status = 'NEW'
+		paymentItem.billingCycleId = 'NEW'
+		//payments.addToBulkPaymentUpload()
+		//paymentItem.save(flush:true)
+		}
+		
+		payment.save(flush:true)
+	}
 }

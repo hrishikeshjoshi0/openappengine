@@ -184,7 +184,7 @@
 				<td valign="top" style="text-align: left;" class="value">
 					<ul>
 					<g:each in="${productInstance.prodProductPrices}" var="p">
-						<li><g:link controller="prodProductPrice" action="show" id="${p.id}">${p?.encodeAsHTML()}</g:link></li>
+						<li><g:link controller="prodProductPrice" action="show" id="${p.ppProdProductPriceId}">${p?.encodeAsHTML()}</g:link></li>
 					</g:each>
 					</ul>
 				</td>
@@ -197,7 +197,7 @@
 				<td valign="top" style="text-align: left;" class="value">
 					<ul>
 					<g:each in="${productInstance.productTaxes}" var="p">
-						<li><g:link controller="fmTaxType" action="show" id="${p.id}">${p?.encodeAsHTML()}</g:link></li>
+						<li><g:link controller="fmTaxType" action="show" id="${p.taxTypeId}">${p?.encodeAsHTML()}</g:link></li>
 					</g:each>
 					</ul>
 				</td>

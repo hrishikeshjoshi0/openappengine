@@ -20,7 +20,7 @@
 	</g:hasErrors>
 
 	<g:form method="post" class="form-horizontal" >
-		<g:hiddenField name="id" value="${productInstance?.id}" />
+		<g:hiddenField name="id" value="${productInstance?.pdProductId}" />
 		<g:hiddenField name="version" value="${productInstance?.version}" />
 		<fieldset class="form">
 			<g:render template="form"/>

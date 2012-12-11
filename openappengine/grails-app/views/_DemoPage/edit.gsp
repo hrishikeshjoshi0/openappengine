@@ -1,26 +1,27 @@
-<%@ page import="com.openappengine.model.party.Party" %>
+<%@ page import="kickstartwithbootstrapgrailsplugin._DemoPage" %>
 <!doctype html>
 <html>
 
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<meta name="layout" content="kickstart" />
-	<g:set var="entityName" value="${message(code: 'party.label', default: 'Party')}" />
+	<g:set var="entityName" value="${message(code: '_DemoPage.label', default: '_DemoPage')}" />
 	<title><g:message code="default.edit.label" args="[entityName]" /></title>
 </head>
 
 <body>
 
-<section id="edit-party" class="first">
+<section id="edit-_DemoPage" class="first">
 
-	<g:hasErrors bean="${partyInstance}">
+	<g:hasErrors bean="${_DemoPageInstance}">
 	<div class="alert alert-error">
-		<g:renderErrors bean="${partyInstance}" as="list" />
+		<g:renderErrors bean="${_DemoPageInstance}" as="list" />
 	</div>
 	</g:hasErrors>
 
-	<g:form method="post" class="form-horizontal" >
-		<g:hiddenField name="id" value="${partyInstance?.partyId}" />
+	<g:form method="post" class="form-horizontal"  enctype="multipart/form-data">
+		<g:hiddenField name="id" value="${_DemoPageInstance?.id}" />
+		<g:hiddenField name="version" value="${_DemoPageInstance?.version}" />
 		<fieldset class="form">
 			<g:render template="form"/>
 		</fieldset>
